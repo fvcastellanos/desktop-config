@@ -1,0 +1,12 @@
+---
+- name: Remove unused dependencies
+  become: yes
+  hosts: all
+  tasks:
+  - name: Remove useless packages from the cache
+    apt:
+      autoclean: yes
+  
+  - name: Remove dependencies that are not longer required
+    apt:
+      autoremove: yes

@@ -1,0 +1,30 @@
+---
+- name: Install Third Party Drivers
+  hosts: all
+  vars:
+    driver_owner: fvcg
+    drivers_folder: drivers
+  tasks:
+  - name: Create drivers folder
+    file:
+      path: "/home/{{ driver_owner }}/{{ drivers_folder }}"
+      state: directory
+      owner: "{{ driver_owner }}"
+      group: "{{ driver_owner }}"
+      mode: u=rw,g=r,o=r
+  
+  - name: Copy DisplayLink driver from local source
+    unarchive:
+      src: ../files/drivers/DisplayLinkUSBGraphicsSoftwareforUbuntu5.3.1.zip
+      dest: "/home/{{ driver_owner }}/{{ drivers_folder }}"
+      owner: "{{ driver_owner }}"
+      group: "{{ driver_owner }}"
+      mode: u=rw,g=r,o=r
+
+  - name: Set execution permission to DisplayLink setup file
+    file:
+      path: "/home/{{ driver_owner }}/{{ drivers_folder }}/displaylink-driver-5.3.1.34.run"
+      state: file
+      owner: "{{ driver_owner }}"
+      group: "{{ driver_owner }}"
+      mode: u+x

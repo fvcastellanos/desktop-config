@@ -1,0 +1,65 @@
+---
+- name: Install Common Applications
+  hosts: all
+  tasks:
+  - name: APT Update
+    include: ../tasks/apt-update.yml
+
+  - name: Install pre-requisites
+    include: ../tasks/apt-update.yml
+
+  - name: Add Microsoft GPG key
+    become: yes
+    apt_key:
+      url: https://packages.microsoft.com/keys/microsoft.asc
+      state: present
+
+  - name: Add Spotify GPG key
+    become: yes
+    apt_key:
+      url: https://download.spotify.com/debian/pubkey_0D811D58.gpg
+      state: present
+
+  - name: Add Brave GPG key
+    become: yes
+    apt_key:
+      url: https://brave-browser-apt-release.s3.brave.com/brave-core.asc
+      state: present
+
+  - name: Add VSCode repository
+    become: yes
+    apt_repository:
+      repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+      state: present
+
+  - name: Add Spotify repository
+    become: yes
+    apt_repository:
+      repo: deb http://repository.spotify.com stable non-free
+      state: present
+
+  - name: Add Brave repository
+    become: yes
+    apt_repository: 
+      repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com stable main
+      state: present
+
+  - name: Install Discord
+    apt:
+      deb: https://discord.com/api/download?platform=linux&format=deb
+
+  - name: APT Update
+    include: ../tasks/apt-update.yml
+      
+  - name: Install Applications
+    become: yes
+    apt:
+      pkg:
+      - curl
+      - wget
+      - htop
+      - code
+      - spotify-client
+      - brave-browser
+      - tilix
+

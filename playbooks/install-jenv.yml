@@ -1,0 +1,45 @@
+---
+- name: Install jEnv
+  hosts: all
+  vars:
+    default_user: fvcg
+
+  tasks:
+
+  - name: Install jEnv
+    git:
+      repo: https://github.com/jenv/jenv.git
+      dest: "/home/{{ default_user }}/.jenv"
+
+  - name: Configure jEnv
+    copy:
+      content: |
+        export PATH="$HOME/.jenv/bin:$PATH"
+        eval "$(jenv init -)"
+      dest: "/home/{{ default_user }}/.profile"
+      owner: "{{ default_user }}"
+      mode: og+r
+
+  - name: Load jEnv
+    shell: 
+      cmd: "source /home/{{ default_user }}/.zshrc && jenv add /usr/lib/jvm/zulu-11-amd64"
+    args:
+      executable: /bin/bash
+
+  - name: Set global JDK
+    shell: 
+      cmd: "source /home/{{ default_user }}/.zshrc && jenv global 11"
+    args:
+      executable: /bin/bash
+
+  - name: jEnv enable export plugin
+    shell: 
+      cmd: "source /home/{{ default_user }}/.zshrc && jenv enable-plugin export"
+    args:
+      executable: /bin/bash
+
+  - name: jEnv enable maven plugin
+    shell: 
+      cmd: "source /home/{{ default_user }}/.zshrc && jenv enable-plugin maven"
+    args:
+      executable: /bin/bash

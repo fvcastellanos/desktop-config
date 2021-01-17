@@ -1,0 +1,50 @@
+---
+- name: Install and configure Docker
+  hosts: all
+  vars:
+    docker_user: fvcg
+  tasks:
+  - name: APT Update
+    include: ../tasks/apt-update.yml
+
+  - name: Install pre-requisites
+    include: ../tasks/install-prerequisites.yml
+    
+  - name: Add an Apt signing key, uses whichever key is at the URL
+    become: yes
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: Add Docker APT repository into sources list
+    become: yes
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+      state: present
+
+  - name: APT Update
+    include: ../tasks/apt-update.yml
+
+  - name: Install Docker CE
+    become: yes
+    apt:
+      name: docker-ce
+
+  - name: Install Docker Compose
+    become: yes
+    get_url:
+      url: https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64
+      dest: /usr/local/bin/docker-compose
+      mode: ugo+x  
+
+  - name: Add docker group
+    become: yes
+    group:
+      name: docker
+      
+  - name: Add user into Docker group
+    become: yes
+    user:
+      name: "{{ docker_user }}"
+      groups: docker
+      append: yes

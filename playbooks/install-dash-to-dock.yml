@@ -1,0 +1,41 @@
+---
+- name: Install Dash to Dock
+  hosts: all
+  vars:
+    default_user: fvcg
+  tasks:
+
+  - name: Create tmp folder
+    file:
+      path: "/home/{{ default_user }}/tmp"
+      state: directory
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
+  - name: Create extensions folder
+    file:
+      path: "/home/{{ default_user }}/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com"
+      state: directory
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
+  - name: Download Dash to Dock
+    get_url:
+      url: https://extensions.gnome.org/review/download/12397.shell-extension.zip
+      dest: "/home/{{ default_user }}/tmp/dash-to-dock.zip"
+
+  - name: Unzip Extension
+    unarchive:
+      remote_src: yes
+      src: "/home/{{ default_user }}/tmp/dash-to-dock.zip"
+      dest: "/home/{{ default_user }}/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com"
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
+  - name: Delete temp files
+    file:
+      path: "/home/{{ default_user }}/tmp"
+      state: absent

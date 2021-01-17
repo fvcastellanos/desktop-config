@@ -1,0 +1,48 @@
+---
+- name: Install Apache Maven
+  hosts: all
+  vars:
+    default_user: fvcg
+    programs_folder: programs
+    maven_version: 3.6.3
+  tasks:
+  - name: Create program folder
+    file:
+      path: "/home/{{ default_user }}/{{ programs_folder }}/maven-{{ maven_version }}"
+      state: directory
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
+  - name: Create tmp folder
+    file:
+      path: "/home/{{ default_user }}/tmp"
+      state: directory
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
+  - name: Download maven
+    get_url:
+      url: https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip
+      dest: "/home/{{ default_user }}/tmp/maven.zip"
+
+  - name: Unzip Maven
+    unarchive:
+      remote_src: yes
+      src: "/home/{{ default_user }}/tmp/maven.zip"
+      dest: "/home/{{ default_user }}/{{ programs_folder }}"
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
+  - name: Add maven binary
+    ansible.builtin.lineinfile:
+      path: "/home/{{ default_user }}/.profile"
+      line: export PATH="$HOME/{{ programs_folder }}/apache-maven-{{ maven_version }}/bin:$PATH"
+      create: yes  
+
+  - name: Delete temp files
+    file:
+      path: "/home/{{ default_user }}/tmp"
+      state: absent
