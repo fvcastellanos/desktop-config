@@ -1,0 +1,22 @@
+---
+- name: Install SDKMAN!
+  hosts: all
+  vars:
+    sdkman_script_install_url: http://get.sdkman.io
+    default_user: fvcg
+    sdkman_folder: "/home/{{ default_user }}/.sdkman"
+
+  tasks:
+  - name: Check if sdkman is installed
+    shell: test -d {{sdkman_folder}} && echo "yes" || echo "no"
+    register: is_sdkman_installed
+
+  - name: Install SDKMAN!
+    when: is_sdkman_installed.stdout == "no"
+    shell: curl -s {{sdkman_script_install_url}} | bash executable=/bin/bash
+
+  - name: Ensure presence of bashrc
+    file: state=touch path=/home/{{default_user}}/.profile
+
+  - name: Add sdkman in .profile
+    lineinfile: dest=/home/{{default_user}}/.profile regexp="\/.sdkman/bin\/sdkman\-init\.sh" line='[[ -s "{{sdkman_folder}}/bin/sdkman-init.sh" && ! $(which sdkman-init.sh) ]] && source "{{sdkman_folder}}/bin/sdkman-init.sh"'
