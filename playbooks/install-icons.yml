@@ -1,0 +1,24 @@
+---
+- name: Install Icon packs
+  hosts: all
+  tasks:
+ 
+  - name: Add Papirus Icon Set PPA repository
+    become: yes
+    ansible.builtin.apt_repository:
+      repo: ppa:papirus/papirus
+
+  - name: Add Numix repository
+    become: yes
+    ansible.builtin.apt_repository:
+      repo: ppa:numix/ppa
+
+  - name: APT Update
+    include: ../tasks/apt-update.yml
+      
+  - name: Install Icon Set
+    become: yes
+    apt:
+      pkg:
+      - numix-icon-theme-circle
+      - papirus-icon-theme
