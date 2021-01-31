@@ -62,6 +62,7 @@
       - code
       - spotify-client
       - brave-browser
+      - chromium-browser
       - tilix
       - zip
       - gnome-tweaks
