@@ -14,7 +14,7 @@
 
   - name: Download nvm
     get_url:
-      url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh
+      url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh
       dest: "/home/{{ default_user }}/install.sh"
       owner: "{{ default_user }}"
       group: "{{ default_user }}"
@@ -39,4 +39,9 @@
   - name: Delete temp files
     file:
       path: "/home/{{ default_user }}/tmp"
+      state: absent
+
+  - name: Delete Install file
+    file:
+      path: "/home/{{ default_user }}/install.sh"
       state: absent
