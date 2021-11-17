@@ -4,24 +4,6 @@
   tasks:
   - name: Update Software Sources
     include: ../tasks/apt-update.yml
-
-  - name: Install pre-requisites
-    include: ../tasks/apt-update.yml
-
-  - name: Add Spotify GPG key
-    become: yes
-    apt_key:
-      url: https://download.spotify.com/debian/pubkey_0D811D58.gpg
-      state: present
-
-  - name: Add Spotify repository
-    become: yes
-    apt_repository:
-      repo: deb http://repository.spotify.com stable non-free
-      state: present
-
-  - name: APT Update
-    include: ../tasks/apt-update.yml
       
   - name: Install APT Applications
     become: yes
@@ -30,15 +12,6 @@
       - curl
       - wget
       - htop
-      - spotify-client
       - chromium-browser
       - tilix
       - zip
-
-  - name: Install Snap Applications
-    become: yes
-    community.general.snap:
-      name:
-        - discord
-        - telegram-desktop
-        - opera
