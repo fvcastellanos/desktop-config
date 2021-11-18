@@ -1,0 +1,47 @@
+---
+- name: Install Common Applications
+  hosts: all
+  tasks:
+  - name: APT Update
+    include: ../tasks/apt-update.yml
+      
+  - name: Install xrdp
+    become: yes
+    apt:
+      pkg:
+      - xrdp
+
+  - name: Add the user 'xrdp' to ssl-cert group
+    become: yes
+    ansible.builtin.user:
+      name: xrdp
+      groups: ssl-cert
+      append: yes
+
+  - name: Config xrdp session GNOME_SHELL_SESSION_MODE
+    become: yes
+    ansible.builtin.lineinfile:
+      path: "/etc/xrdp/startwm.sh"
+      insertafter: '^# published under The MirOS Licence'
+      line: export GNOME_SHELL_SESSION_MODE=pop
+      create: yes  
+
+  - name: Config xrdp session GDMSESSION
+    become: yes
+    ansible.builtin.lineinfile:
+      path: "/etc/xrdp/startwm.sh"
+      insertafter: '^export GNOME_SHELL_SESSION_MODE=pop'
+      line: export GDMSESSION=pop
+      create: yes  
+
+  - name: Config xrdp session XDG_CURRENT_DESKTOP
+    become: yes
+    ansible.builtin.lineinfile:
+      path: "/etc/xrdp/startwm.sh"
+      insertafter: '^export GDMSESSION=pop'
+      line: export XDG_CURRENT_DESKTOP=pop:GNOME
+      create: yes  
+
+  - name: Restart xrdp service
+    become: yes
+    shell: systemctl restart xrdp

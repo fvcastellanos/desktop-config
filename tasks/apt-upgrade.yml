@@ -1,0 +1,5 @@
+---
+- name: APT Upgrade
+  become: yes
+  apt:
+    upgrade: yes
