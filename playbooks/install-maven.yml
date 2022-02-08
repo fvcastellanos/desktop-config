@@ -4,7 +4,7 @@
   vars:
     default_user: fvcg
     programs_folder: programs
-    maven_version: 3.8.2
+    maven_version: 3.8.4
   tasks:
   - name: Create program folder
     file:
@@ -24,7 +24,7 @@
 
   - name: Download maven
     get_url:
-      url: https://dlcdn.apache.org/maven/maven-3/3.8.2/binaries/apache-maven-3.8.2-bin.zip
+      url: "https://dlcdn.apache.org/maven/maven-3/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.zip"
       dest: "/home/{{ default_user }}/tmp/maven.zip"
 
   - name: Unzip Maven
