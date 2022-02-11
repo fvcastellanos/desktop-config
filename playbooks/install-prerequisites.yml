@@ -1,0 +1,8 @@
+---
+- name: Install prerequisites
+  become: yes
+  hosts: all
+  tasks:
+
+  - name: Install pre-requisites
+    include: ../tasks/install-prerequisites.yml

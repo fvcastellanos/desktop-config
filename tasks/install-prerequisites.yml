@@ -8,3 +8,8 @@
     - ca-certificates
     - zsh
     - git-all
+    - net-tools
+
+- name: Create loopback alias
+  become: yes
+  shell: "ifconfig lo: 192.168.99.1 netmask 255.255.255.0 up"
