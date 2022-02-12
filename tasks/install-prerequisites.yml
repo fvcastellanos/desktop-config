@@ -8,13 +8,31 @@
     - ca-certificates
     - zsh
     - git-all
+    - direnv
     - net-tools
     - libssl-dev
     - libreadline-dev
     - zlib1g-dev
     - libbz2-dev
     - libsqlite3-dev
-    
-- name: Create loopback alias
+    - python3-gpg
+    - libpq-dev
+    - libsasl2-dev
+    - python3-dev
+    - libldap2-dev
+    - libssl-dev
+
+- name: Copy rc.local file
   become: yes
-  shell: "ifconfig lo: 192.168.99.1 netmask 255.255.255.0 up"
+  copy:
+    src: ../files/config/shell/rc.local
+    dest: "/etc"
+    mode: u=x
+
+- name: Enable rc-local.service
+  become: yes
+  shell: "systemctl enable rc-local.service"
+
+- name: Start rc-local.service
+  become: yes
+  shell: "systemctl start  rc-local.service"
