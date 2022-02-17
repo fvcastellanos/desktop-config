@@ -1,0 +1,66 @@
+---
+- name: Configure Python Development Environment
+  hosts: all
+  vars:
+    shell_user: fvcg
+  tasks:
+  - name: Install Python pre-requisites
+    become: yes
+    apt:
+      pkg:
+      - python3-pip
+      - direnv
+      - libssl-dev
+      - libreadline-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libsqlite3-dev
+      - python3-gpg
+      - libpq-dev
+      - libsasl2-dev
+      - python3-dev
+      - libldap2-dev
+      - libssl-dev
+
+  - name: Git checkout pyenv
+    ansible.builtin.git:
+      repo: 'https://github.com/pyenv/pyenv.git'
+      dest: "/home/{{ shell_user }}/.pyenv"
+
+  - name: Git checkout pyenv plugin -> pyenv-virtualenv
+    ansible.builtin.git:
+      repo: 'https://github.com/pyenv/pyenv-virtualenv.git'
+      dest: "/home/{{ shell_user }}/.pyenv/plugins/pyenv-virtualenv"
+
+  - name: Git checkout pyenv plugin -> pyenv-doctor
+    ansible.builtin.git:
+      repo: 'git://github.com/pyenv/pyenv-doctor.git'
+      dest: "/home/{{ shell_user }}/.pyenv/plugins/pyenv-doctor"
+
+  - name: Copy custom pyenv config file
+    copy:
+      src: ../files/config/shell/.pyenvrc
+      dest: "/home/{{ shell_user }}"
+      owner: "{{ shell_user }}"
+      group: "{{ shell_user }}"
+      mode: g=r,o=r
+
+  - name: Config pyenv loading
+    ansible.builtin.lineinfile:
+      path: "/home/{{ shell_user }}/.profile"
+      line: 'source $HOME/.pyenvrc'
+      create: yes  
+
+  - name: Update alternatives python3 -> python
+    become: yes
+    shell:
+      cmd: update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
+  - name: Update alternatives pip3 -> pip
+    become: yes
+    shell:
+      cmd: update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+  - name: Install virtualenv
+    shell:
+      cmd: pip install --user virtualenv
