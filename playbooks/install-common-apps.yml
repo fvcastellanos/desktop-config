@@ -13,5 +13,6 @@
       - wget
       - htop
       - chromium-browser
+      - gnome-tweaks
       - tilix
       - zip
