@@ -1,0 +1,27 @@
+---
+- name: Install GitHub CLI
+  hosts: all
+    
+  tasks:
+  - name: APT Update
+    include: ../tasks/apt-update.yml
+   
+  - name: Add an Apt signing key, uses whichever key is at the URL
+    become: yes
+    apt_key:
+      url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+      state: present
+
+  - name: Add GitHub CLI APT repository into sources list
+    become: yes
+    apt_repository:
+      repo: deb [arch=amd64] https://cli.github.com/packages stable main
+      state: present
+
+  - name: APT Update
+    include: ../tasks/apt-update.yml
+
+  - name: Install GitHub CLI
+    become: yes
+    apt:
+      name: gh
