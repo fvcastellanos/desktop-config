@@ -6,14 +6,6 @@
     programs_folder: programs
     maven_version: 3.8.6
   tasks:
-  - name: Create program folder
-    file:
-      path: "/home/{{ default_user }}/{{ programs_folder }}/maven-{{ maven_version }}"
-      state: directory
-      owner: "{{ default_user }}"
-      group: "{{ default_user }}"
-      mode: og+r
-
   - name: Create tmp folder
     file:
       path: "/home/{{ default_user }}/tmp"
