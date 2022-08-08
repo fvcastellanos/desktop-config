@@ -1,19 +1,18 @@
 ---
-- name: Install DotNet Core 3.1 SDK
+- name: Install DotNet Core 6.0 SDK
   hosts: all
   tasks:
 
   - name: Install Microsoft Repository
     become: yes
     apt:
-      deb: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+      deb: https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
   
   - name: APT Update
     include: ../tasks/apt-update.yml
       
-  - name: Install DotNet Core 3.1
+  - name: Install DotNet Core 6
     become: yes
     apt:
       pkg:
-      - dotnet-sdk-3.1
-
+      - dotnet-sdk-6.0

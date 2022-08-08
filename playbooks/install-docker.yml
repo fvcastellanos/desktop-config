@@ -19,7 +19,7 @@
   - name: Add Docker APT repository into sources list
     become: yes
     apt_repository:
-      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
       state: present
 
   - name: APT Update
@@ -28,14 +28,11 @@
   - name: Install Docker CE
     become: yes
     apt:
-      name: docker-ce
-
-  - name: Install Docker Compose
-    become: yes
-    get_url:
-      url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
-      dest: /usr/local/bin/docker-compose
-      mode: ugo+x  
+      pkg: 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
 
   - name: Add docker group
     become: yes
