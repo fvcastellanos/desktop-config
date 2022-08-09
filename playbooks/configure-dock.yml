@@ -1,0 +1,37 @@
+---
+- name: Configure Dock
+  hosts: all
+  vars:
+    default_user: fvcg
+
+  tasks:
+
+  - name: Set Fixed Position
+    shell:
+      cmd: "gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed true"
+
+  - name: Set Dock position to Bottom
+    shell:
+      cmd: "gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'"
+
+  - name: Set Max Icon Size to 32px
+    shell:
+      cmd: "gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32"
+
+  - name: Extend height to whole screen
+    shell:
+      cmd: "gsettings set org.gnome.shell.extensions.dash-to-dock extend-height true"
+
+  - name: Move Apps Icon to left
+    shell:
+      cmd: "gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true"
+
+  - name: Display in all monitors
+    shell:
+      cmd: "gsettings set org.gnome.shell.extensions.dash-to-dock multi-monitor true"
+
+# gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
+# gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
+# gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed true
+# gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
+# gsettings set org.gnome.shell.extensions.dash-to-dock extend-height true
