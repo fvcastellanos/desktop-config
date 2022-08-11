@@ -14,7 +14,7 @@
 
   - name: Download nvm
     get_url:
-      url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh
+      url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh
       dest: "/home/{{ default_user }}/install.sh"
       owner: "{{ default_user }}"
       group: "{{ default_user }}"

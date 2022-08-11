@@ -19,6 +19,14 @@
       url: "https://dlcdn.apache.org/maven/maven-3/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.zip"
       dest: "/home/{{ default_user }}/tmp/maven.zip"
 
+  - name: Create programs folder
+    file:
+      path: "/home/{{ default_user }}/programs"
+      state: directory
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
   - name: Unzip Maven
     unarchive:
       remote_src: yes
