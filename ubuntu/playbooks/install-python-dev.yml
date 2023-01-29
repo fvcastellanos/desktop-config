@@ -39,7 +39,7 @@
 
   - name: Copy custom pyenv config file
     copy:
-      src: ../files/config/shell/.pyenvrc
+      src: ../../files/config/shell/.pyenvrc
       dest: "/home/{{ shell_user }}"
       owner: "{{ shell_user }}"
       group: "{{ shell_user }}"

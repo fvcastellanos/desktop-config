@@ -1,0 +1,18 @@
+---
+- name: Install Loopback Alias
+  hosts: all
+  tasks:  
+  - name: Copy rc.local file
+    become: yes
+    copy:
+      src: ../../files/config/shell/rc.local
+      dest: "/etc"
+      mode: u=x
+
+  - name: Enable rc-local.service
+    become: yes
+    shell: "systemctl enable rc-local.service"
+
+  - name: Start rc-local.service
+    become: yes
+    shell: "systemctl start  rc-local.service"

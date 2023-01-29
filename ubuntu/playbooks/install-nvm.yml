@@ -1,0 +1,47 @@
+---
+- name: Install nvm
+  hosts: all
+  vars:
+    default_user: fvcg
+  tasks:
+  - name: Create tmp folder
+    file:
+      path: "/home/{{ default_user }}/tmp"
+      state: directory
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
+  - name: Download nvm
+    get_url:
+      url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh
+      dest: "/home/{{ default_user }}/install.sh"
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: u+x
+
+  - name: Install nvm
+    shell:
+      cmd: "/home/{{ default_user }}/install.sh"
+
+  - name: Config nvm
+    ansible.builtin.lineinfile:
+      path: "/home/{{ default_user }}/.profile"
+      line: export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+      create: yes  
+
+  - name: Config nvm loading
+    ansible.builtin.lineinfile:
+      path: "/home/{{ default_user }}/.profile"
+      line: '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
+      create: yes  
+
+  - name: Delete temp files
+    file:
+      path: "/home/{{ default_user }}/tmp"
+      state: absent
+
+  - name: Delete Install file
+    file:
+      path: "/home/{{ default_user }}/install.sh"
+      state: absent

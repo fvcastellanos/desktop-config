@@ -1,0 +1,15 @@
+---
+- name: Install Common Applications
+  hosts: all
+  tasks:
+  - name: Update Software Sources
+    include: ../tasks/dnf-update.yml
+      
+  - name: Install APT Applications
+    become: yes
+    ansible.builtin.dnf:
+      name:
+      - neofetch
+      - htop
+      - chromium
+      - gh
