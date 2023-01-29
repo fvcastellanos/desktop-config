@@ -15,7 +15,7 @@
   
   - name: Copy DisplayLink driver from local source
     unarchive:
-      src: ../files/drivers/DisplayLinkUSBGraphicsSoftwareforUbuntu5.3.1.zip
+      src: ../../files/drivers/DisplayLinkUSBGraphicsSoftwareforUbuntu5.3.1.zip
       dest: "/home/{{ driver_owner }}/{{ drivers_folder }}"
       owner: "{{ driver_owner }}"
       group: "{{ driver_owner }}"

@@ -1,0 +1,8 @@
+---
+- name: Install pre-requisites
+  become: yes
+  ansible.builtin.dnf:
+    name:
+    - zsh
+    - git-all
+    state: present

@@ -5,8 +5,8 @@
     shell_user: fvcg
   tasks:
 
-  - name: APT Update
-    include: ../tasks/apt-update.yml
+  - name: DNF Update
+    include: ../tasks/dnf-update.yml
 
   - name: Install pre-requisites
     include: ../tasks/install-prerequisites.yml
@@ -25,7 +25,7 @@
 
   - name: Copy zsh Config file
     copy:
-      src: ../files/config/shell/.zshrc
+      src: ../../files/config/shell/.zshrc
       dest: "/home/{{ shell_user }}"
       owner: "{{ shell_user }}"
       group: "{{ shell_user }}"
@@ -33,7 +33,7 @@
 
   - name: Copy custom Profile Config file
     copy:
-      src: ../files/config/shell/.profile
+      src: ../../files/config/shell/.profile
       dest: "/home/{{ shell_user }}"
       owner: "{{ shell_user }}"
       group: "{{ shell_user }}"

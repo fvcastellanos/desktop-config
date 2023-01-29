@@ -1,0 +1,6 @@
+---
+- name: DNF Update
+  become: yes
+  ansible.builtin.dnf:
+    update_cache: true
+    state: latest

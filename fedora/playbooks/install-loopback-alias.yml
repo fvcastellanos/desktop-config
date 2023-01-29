@@ -5,8 +5,8 @@
   - name: Copy rc.local file
     become: yes
     copy:
-      src: ../files/config/shell/rc.local
-      dest: "/etc"
+      src: ../../files/config/shell/rc.local
+      dest: "/etc/rc.d"
       mode: u=x
 
   - name: Enable rc-local.service
