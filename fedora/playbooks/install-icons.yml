@@ -1,0 +1,13 @@
+---
+- name: Install Icon packs
+  hosts: all
+  tasks:
+ 
+  - name: Install Icon Set
+    become: yes
+    ansible.builtin.dnf:
+      name:
+      - numix-icon-theme-circle
+      - papirus-icon-theme
+      - numix-icon-theme-square
+      - pop-icon-theme
