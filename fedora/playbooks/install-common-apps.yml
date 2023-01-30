@@ -4,7 +4,25 @@
   tasks:
   - name: Update Software Sources
     include: ../tasks/dnf-update.yml
-      
+
+  - name: Add VS Code Key
+    become: yes
+    ansible.builtin.rpm_key:
+      state: present
+      key: https://packages.microsoft.com/keys/microsoft.asc
+
+  - name: Install Visual Studio Code rpm repository
+    become: true
+    ansible.builtin.yum_repository:
+      name: visual-studio-code
+      description: Visual Studio Code Repository
+      baseurl: https://packages.microsoft.com/yumrepos/vscode
+      gpgcheck: true
+      gpgkey: https://packages.microsoft.com/keys/microsoft.asc
+
+  - name: Update Software Sources
+    include: ../tasks/dnf-update.yml
+
   - name: Install APT Applications
     become: yes
     ansible.builtin.dnf:
@@ -13,3 +31,7 @@
       - htop
       - chromium
       - gh
+      - code
+      - tilix
+      - gnome-tweaks
+      - gnome-extensions-app

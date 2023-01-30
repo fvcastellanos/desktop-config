@@ -1,0 +1,7 @@
+---
+- name: Enable FlatHub
+  hosts: all
+  tasks:
+  - name: Add FlatHub remote
+    shell:
+      cmd: "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
