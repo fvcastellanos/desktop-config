@@ -1,0 +1,23 @@
+---
+- name: Install Terraform
+  hosts: all
+  tasks:
+  - name: Install prerequisites
+    become: yes
+    include: ../tasks/install-prerequisites.yml
+
+  - name: Add HashiCorp Repository
+    become: true
+    shell:
+      cmd: dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+
+  - name: Update Software Sources
+    include: ../tasks/dnf-update.yml
+
+  - name: Install terraform
+    become: yes
+    ansible.builtin.dnf:
+      name:
+      - terraform
+      state: present
+

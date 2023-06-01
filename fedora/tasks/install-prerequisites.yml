@@ -5,4 +5,5 @@
     name:
     - zsh
     - git-all
+    - dnf-plugins-core
     state: present

@@ -1,0 +1,45 @@
+---
+- name: Install Terraform
+  hosts: all
+  vars:
+    docker_user: fvcg
+  tasks:
+  - name: Install prerequisites
+    become: yes
+    include: ../tasks/install-prerequisites.yml
+
+  - name: Add Docker Repository
+    become: true
+    shell:
+      cmd: dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+
+  - name: Update Software Sources
+    include: ../tasks/dnf-update.yml
+
+  - name: Install Docker
+    become: yes
+    ansible.builtin.dnf:
+      name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+      state: present
+
+  - name: Add docker group
+    become: yes
+    group:
+      name: docker
+      
+  - name: Add user into Docker group
+    become: yes
+    user:
+      name: "{{ docker_user }}"
+      groups: docker
+      append: yes
+
+  - name: Start docker service
+    ansible.builtin.systemd:
+      state: started
+      name: docker
