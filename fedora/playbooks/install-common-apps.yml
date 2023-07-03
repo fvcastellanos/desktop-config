@@ -23,7 +23,7 @@
   - name: Update Software Sources
     include: ../tasks/dnf-update.yml
 
-  - name: Install APT Applications
+  - name: Install DNF Applications
     become: yes
     ansible.builtin.dnf:
       name:
