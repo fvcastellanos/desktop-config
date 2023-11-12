@@ -40,6 +40,8 @@
       append: yes
 
   - name: Start docker service
+    become: yes
     ansible.builtin.systemd:
       state: started
+      enabled: yes
       name: docker
