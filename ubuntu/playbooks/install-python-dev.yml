@@ -34,7 +34,7 @@
 
   - name: Git checkout pyenv plugin -> pyenv-doctor
     ansible.builtin.git:
-      repo: 'git://github.com/pyenv/pyenv-doctor.git'
+      repo: 'https://github.com/pyenv/pyenv-doctor.git'
       dest: "/home/{{ shell_user }}/.pyenv/plugins/pyenv-doctor"
 
   - name: Copy custom pyenv config file
