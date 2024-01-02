@@ -6,10 +6,10 @@
   tasks:
 
   - name: DNF Update
-    include: ../tasks/dnf-update.yml
+    include_tasks: ../tasks/dnf-update.yml
 
   - name: Install pre-requisites
-    include: ../tasks/install-prerequisites.yml
+    include_tasks: ../tasks/install-prerequisites.yml
 
   - name: Set zsh as default shell
     become: yes

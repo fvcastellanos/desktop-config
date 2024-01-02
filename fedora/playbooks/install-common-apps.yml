@@ -3,7 +3,7 @@
   hosts: all
   tasks:
   - name: Update Software Sources
-    include: ../tasks/dnf-update.yml
+    include_tasks: ../tasks/dnf-update.yml
 
   - name: Add VS Code Key
     become: yes
@@ -21,7 +21,7 @@
       gpgkey: https://packages.microsoft.com/keys/microsoft.asc
 
   - name: Update Software Sources
-    include: ../tasks/dnf-update.yml
+    include_tasks: ../tasks/dnf-update.yml
 
   - name: Install DNF Applications
     become: yes
@@ -35,3 +35,5 @@
       - tilix
       - gnome-tweaks
       - gnome-extensions-app
+      - openh264
+
