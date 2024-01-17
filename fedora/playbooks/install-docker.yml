@@ -5,8 +5,7 @@
     docker_user: fvcg
   tasks:
   - name: Install prerequisites
-    become: yes
-    include: ../tasks/install-prerequisites.yml
+    include_tasks: ../tasks/install-prerequisites.yml
 
   - name: Add Docker Repository
     become: true
@@ -14,7 +13,7 @@
       cmd: dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 
   - name: Update Software Sources
-    include: ../tasks/dnf-update.yml
+    include_tasks: ../tasks/dnf-update.yml
 
   - name: Install Docker
     become: yes
