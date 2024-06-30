@@ -1,13 +1,13 @@
 ---
-- name: Install DotNet Core 6.0 SDK
+- name: Install DotNet Core 8.0 SDK
   hosts: all
   tasks:
 
   - name: DNF Update
-    include: ../tasks/dnf-update.yml
+    include_tasks: ../tasks/dnf-update.yml
 
-  - name: Install DotNet Core 6
+  - name: Install DotNet Core 8
     become: yes
     ansible.builtin.dnf:
       name:
-      - dotnet-sdk-6.0
+      - dotnet-sdk-8.0
