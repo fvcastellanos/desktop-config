@@ -1,0 +1,56 @@
+---
+- name: Install PocketBase
+  hosts: all
+  vars:
+    default_user: fvcg
+    programs_folder: programs
+    pocketbase_version: 0.22.21
+  tasks:
+  - name: Create tmp folder
+    file:
+      path: "/home/{{ default_user }}/tmp"
+      state: directory
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
+  - name: Download Pocketbase
+    get_url:    
+      url: "https://github.com/pocketbase/pocketbase/releases/download/v{{pocketbase_version}}/pocketbase_{{pocketbase_version}}_linux_amd64.zip"
+      dest: "/home/{{ default_user }}/tmp/pocketbase.zip"
+
+  - name: Create programs folder
+    file:
+      path: "/home/{{ default_user }}/programs"
+      state: directory
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
+  - name: Create pocketbase folder
+    file:
+      path: "/home/{{ default_user }}/programs/pocketbase-{{pocketbase_version}}"
+      state: directory
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
+  - name: Unzip Pocketbase
+    unarchive:
+      remote_src: yes
+      src: "/home/{{ default_user }}/tmp/pocketbase.zip"
+      dest: "/home/{{ default_user }}/{{ programs_folder }}/pocketbase-{{pocketbase_version}}"
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: og+r
+
+  - name: Add Pocketbase binary
+    ansible.builtin.lineinfile:
+      path: "/home/{{ default_user }}/.profile"
+      line: export PATH="$HOME/{{ programs_folder }}/pocketbase-{{pocketbase_version}}:$PATH"
+      create: yes  
+
+  - name: Delete temp files
+    file:
+      path: "/home/{{ default_user }}/tmp"
+      state: absent
