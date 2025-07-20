@@ -27,7 +27,7 @@
     become: yes
     ansible.builtin.dnf:
       name:
-      - neofetch
+      - fastfetch
       - htop
       - chromium
       - gh

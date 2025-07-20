@@ -4,7 +4,7 @@
   vars:
     default_user: fvcg
     programs_folder: programs
-    maven_version: 3.9.5
+    maven_version: 3.9.11
   tasks:
   - name: Create tmp folder
     file:

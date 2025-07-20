@@ -23,7 +23,7 @@
 
   - name: Download Dash to Dock
     get_url:
-      url: https://extensions.gnome.org/extension-data/dash-to-dockmicxgx.gmail.com.v84.shell-extension.zip
+      url: https://extensions.gnome.org/extension-data/dash-to-dockmicxgx.gmail.com.v101.shell-extension.zip
       dest: "/home/{{ default_user }}/tmp/dash-to-dock.zip"
 
   - name: Unzip Extension

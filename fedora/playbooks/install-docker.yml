@@ -10,7 +10,7 @@
   - name: Add Docker Repository
     become: true
     shell:
-      cmd: dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+      cmd: dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
 
   - name: Update Software Sources
     include_tasks: ../tasks/dnf-update.yml
